@@ -29,6 +29,9 @@ public class Student {
     @Column
     private String email;
 
+    @Transient
+    private String fullName;
+
     public Student(CreateStudentRequest createStudentRequest){
         this.firstName = createStudentRequest.getFirstName();
         this.lastName = createStudentRequest.getLastName();

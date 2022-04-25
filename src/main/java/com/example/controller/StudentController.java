@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.entity.Student;
 import com.example.request.CreateStudentRequest;
+import com.example.request.InQueryRequest;
 import com.example.request.UpdateStudentRequest;
 import com.example.response.StudentResponse;
 import com.example.service.StudentService;
@@ -32,9 +33,72 @@ public class StudentController {
         return studentResponseList;
     }
 
+    @GetMapping("getAllWithPagination")
+    public List<StudentResponse> getAllStudentsWithPagination(@RequestParam int pageNo, @RequestParam int pageSize){
+        List<Student> studentList = studentService.getAllStudentsWithPagination(pageNo,pageSize);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
+    @GetMapping("getAllWithSorting")
+    public List<StudentResponse> getAllStudentsWithSorting(){
+        List<Student> studentList = studentService.getAllStudentsWithSorting();
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
     @GetMapping("getByFirstName")
     public List<StudentResponse> getByFirstName(@RequestParam(value = "first_name") String firstName){
         List<Student> studentList = studentService.getByFirstName(firstName);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
+    @GetMapping("getByFirstNameAndLastName")
+    public List<StudentResponse> getByFirstNameAndLastName(@RequestParam(value = "first_name") String firstName, @RequestParam String lastName){
+        List<Student> studentList = studentService.getByFirstNameAndLastName(firstName, lastName);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
+    @GetMapping("getByFirstNameOrLastName")
+    public List<StudentResponse> getByFirstNameOrLastName(@RequestParam(value = "first_name") String firstName, @RequestParam String lastName){
+        List<Student> studentList = studentService.getByFirstNameOrLastName(firstName, lastName);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
+    @GetMapping("getByFirstNameIn")
+    public List<StudentResponse> getByFirstNameIn(@RequestBody InQueryRequest inQueryRequest){
+        List<Student> studentList = studentService.getByFirstNameIn(inQueryRequest);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
+    @GetMapping("likeFirstName")
+    public List<StudentResponse> likeFirstName(@RequestParam String firstName){
+        List<Student> studentList = studentService.likeFirstName(firstName);
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
+    @GetMapping("startsWithFirstName")
+    public List<StudentResponse> startsWithFirstName(@RequestParam String firstName){
+        List<Student> studentList = studentService.startsWithFirstName(firstName);
         List<StudentResponse> studentResponseList = new ArrayList<>();
 
         studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
