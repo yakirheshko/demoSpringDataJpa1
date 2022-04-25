@@ -117,9 +117,19 @@ public class StudentController {
         return new StudentResponse(student);
     }
 
+    @PutMapping("updateStudentFirstNameByLastNameJPQL")
+    public Integer updateStudentFirstNameByLastNameJPQL(@Valid @RequestBody UpdateStudentRequest updateStudentRequest){
+        return studentService.updateStudentFirstNameByLastNameJPQL(updateStudentRequest);
+    }
+
     @DeleteMapping("delete")
     public String deleteStudent(@RequestParam long id){
         return studentService.deleteStudent(id);
+    }
+
+    @DeleteMapping("deleteStudentByLastNameJPQL")
+    public Integer deleteStudentByLastNameJPQL(@RequestParam String lastName){
+        return studentService.deleteStudentByLastNameJPQL(lastName);
     }
 
 /*    @DeleteMapping("delete/{id}")
