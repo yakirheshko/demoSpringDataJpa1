@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -31,6 +32,14 @@ public class Student {
 
     @Transient
     private String fullName;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address1 address;
+
+    @OneToMany(mappedBy = "student")
+    private List<Subject> learningSubjects;
+
 
     public Student(CreateStudentRequest createStudentRequest){
         this.firstName = createStudentRequest.getFirstName();

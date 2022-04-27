@@ -87,6 +87,19 @@ public class StudentController {
         return studentResponseList;
     }
 
+    @GetMapping("getByCity")
+    public List<StudentResponse> getByCity(@RequestParam String city){
+        /*JPA*/
+        //List<Student> studentList = studentService.getByCity(city);//JPL
+        /*JPQL*/
+        List<Student> studentList = studentService.getByCityJPQL(city);//JPL
+
+        List<StudentResponse> studentResponseList = new ArrayList<>();
+
+        studentList.stream().forEach(student -> studentResponseList.add(new StudentResponse(student)));
+        return studentResponseList;
+    }
+
     @GetMapping("likeFirstName")
     public List<StudentResponse> likeFirstName(@RequestParam String firstName){
         List<Student> studentList = studentService.likeFirstName(firstName);
@@ -105,6 +118,14 @@ public class StudentController {
         return studentResponseList;
     }
 
+    //before section 11
+    /*@PostMapping("create")
+    public StudentResponse createStudent(@Valid @RequestBody CreateStudentRequest createStudentRequest){
+        Student student = studentService.createStudent(createStudentRequest);
+        return new StudentResponse(student);
+    }*/
+
+    //with relationship - section 11
     @PostMapping("create")
     public StudentResponse createStudent(@Valid @RequestBody CreateStudentRequest createStudentRequest){
         Student student = studentService.createStudent(createStudentRequest);
